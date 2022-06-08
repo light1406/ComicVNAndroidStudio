@@ -8,5 +8,34 @@ public class User {
     private String password;
     private String name;
     private String avatar;
-    private List<Comic> follows;
+
+    public User() {}
+
+    public User(int id, String username, String password, String name, String avatar){
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.avatar = avatar;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 }
