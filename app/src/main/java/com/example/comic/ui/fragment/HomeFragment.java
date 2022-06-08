@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.example.comic.R;
 import com.example.comic.dao.ComicDao;
 import com.example.comic.obj.Comic;
 import com.example.comic.ui.adapter.ForYouAdapter;
+import com.example.comic.ui.adapter.NewUpdateAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -33,20 +35,26 @@ import java.util.TimerTask;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView forYouListView;
-    private ForYouAdapter forYouAdapter;
-    private List<Comic> forYouList;
     private View view;
+    private RecyclerView forYouListView, newUpdateListView;
+
+    private ForYouAdapter forYouAdapter;
+    private NewUpdateAdapter newUpdateAdapter;
+
+    private List<Comic> forYouList, newUpdateList;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater
+            , @Nullable ViewGroup container
+            , @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.home, container, false);
 
         //danh cho ban
         forYouListView = view.findViewById(R.id.for_you_list);
-        forYouListView.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.HORIZONTAL, false));
+        forYouListView.setLayoutManager(new LinearLayoutManager(view.getContext()
+                , RecyclerView.HORIZONTAL, false));
         forYouList = new ArrayList<>();
         forYouAdapter = new ForYouAdapter(forYouList);
         forYouListView.setAdapter(forYouAdapter);
@@ -55,7 +63,38 @@ public class HomeFragment extends Fragment {
         autoScollSlide();
 
         //truyen moi cap nhat
+        newUpdateListView = view.findViewById(R.id.new_update_list);
+        newUpdateListView.setLayoutManager(new GridLayoutManager(view.getContext()
+                , 2));
+        newUpdateListView.setNestedScrollingEnabled(false);
+        newUpdateList = new ArrayList<>();
+        newUpdateAdapter = new NewUpdateAdapter(newUpdateList);
+        newUpdateListView.setAdapter(newUpdateAdapter);
+        loadDataNewUpdate();
+
         return view;
+    }
+
+    private void loadDataNewUpdate(){
+        Query query = ComicDao.getInstance().getForYouComics();
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot post: snapshot.getChildren()){
+                    Comic comic = post.getValue(Comic.class);
+                    for (int i =0 ; i < 10; i++){
+                        newUpdateList.add(comic);
+                    }
+                }
+                newUpdateAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(view.getContext()
+                        , "Đã có chuyện gì đó không ổn xảy ra", Toast.LENGTH_SHORT ).show();
+            }
+        });
     }
 
     private void loadDataForYou(){
@@ -74,12 +113,11 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(view.getContext(), "Đã có chuyện gì đó không ổn xảy ra", Toast.LENGTH_SHORT ).show();
+                Toast.makeText(view.getContext()
+                        , "Đã có chuyện gì đó không ổn xảy ra", Toast.LENGTH_SHORT ).show();
             }
         });
     }
-
-
 
     private void autoScollSlide(){
         new CountDownTimer(60000, 1000) {

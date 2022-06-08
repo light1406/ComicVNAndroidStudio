@@ -26,7 +26,8 @@ public class ForYouAdapter extends RecyclerView.Adapter<ForYouAdapter.ForYouHold
     @NonNull
     @Override
     public ForYouHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.banner_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.banner_card, parent, false);
         return new ForYouHolder(view);
     }
 
