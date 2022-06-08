@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.zip.Inflater;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryVH> {
-    private List<History> list = new ArrayList<>();
+    private List<History> list;
 
     public void setData(List<History> items) {
-        list.addAll(items);
+        this.list = items;
         notifyDataSetChanged();
     }
 
@@ -34,10 +34,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryVH> {
     @Override
     public void onBindViewHolder(@NonNull HistoryVH holder, int position) {
         History his = list.get(position);
-        holder.txtName.setText(his.getName());
-        holder.txtState.setText(his.getNumberChapter());
-        holder.imageView.setImageDrawable(Drawable.createFromPath(his.getUrl()));
-
+        if (his != null) {
+            holder.txtName.setText(his.getName());
+            holder.txtState.setText(his.getNumberChapter());
+            holder.imageView.setImageDrawable(Drawable.createFromPath(his.getUrl()));
+        }
     }
 
     @Override
