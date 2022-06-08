@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Comic">
         <activity
+            android:name=".ui.HistoryActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
