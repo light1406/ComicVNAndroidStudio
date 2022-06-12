@@ -1,5 +1,6 @@
 package com.example.comic.ui.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.comic.R;
 import com.example.comic.dao.ComicDao;
 import com.example.comic.obj.Comic;
+import com.example.comic.ui.activity.MainActivity;
 import com.example.comic.ui.adapter.ForYouAdapter;
 import com.example.comic.ui.adapter.NewUpdateAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -62,7 +64,7 @@ public class HomeFragment extends Fragment {
                 , 2));
         newUpdateListView.setNestedScrollingEnabled(false);
         newUpdateList = new ArrayList<>();
-        newUpdateAdapter = new NewUpdateAdapter(newUpdateList);
+        newUpdateAdapter = new NewUpdateAdapter(newUpdateList, container.getContext());
         newUpdateListView.setAdapter(newUpdateAdapter);
         loadDataNewUpdate();
 

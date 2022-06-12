@@ -1,5 +1,8 @@
 package com.example.comic.ui.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comic.R;
 import com.example.comic.obj.Comic;
+import com.example.comic.ui.activity.ComicDetailActivity;
+import com.example.comic.ui.activity.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -18,9 +23,11 @@ import java.util.List;
 public class NewUpdateAdapter extends RecyclerView.Adapter<NewUpdateAdapter.NewUpdateHolder> {
 
     private List<Comic> newUpdateList;
+    private Context context;
 
-    public NewUpdateAdapter(List<Comic> newUpdateList){
+    public NewUpdateAdapter(List<Comic> newUpdateList, Context context){
         this.newUpdateList = newUpdateList;
+        this.context = context;
     }
 
     @NonNull
@@ -38,6 +45,12 @@ public class NewUpdateAdapter extends RecyclerView.Adapter<NewUpdateAdapter.NewU
                 .load(newUpdateList.get(position).getCover())
                 .fit()
                 .into(holder.comicImage);
+        holder.comicImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.startActivity(new Intent(context, ComicDetailActivity.class));
+            }
+        });
     }
 
     @Override
