@@ -17,10 +17,12 @@ public class DetailTabAdapter extends FragmentStateAdapter {
 
     private List<Chapter> chapterList;
     private String content;
+    private int comicId;
 
-    public DetailTabAdapter(@NonNull FragmentActivity fragmentActivity
-                            ,List<Chapter> chapterList, String content) {
+    public DetailTabAdapter(@NonNull FragmentActivity fragmentActivity,
+                            int comicId,List<Chapter> chapterList, String content) {
         super(fragmentActivity);
+        this.comicId = comicId;
         this.chapterList = chapterList;
         this.content = content;
     }
@@ -30,7 +32,7 @@ public class DetailTabAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new ChapterFragment(chapterList);
+                return new ChapterFragment(comicId,chapterList);
             case 1:
                 return new ContentFragment(content);
             default:

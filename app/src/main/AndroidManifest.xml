@@ -21,6 +21,9 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
 
+        <activity android:name=".ui.activity.ChapterActivity"
+            android:exported="true"/>
+
         <activity
             android:name=".ui.activity.SplashActivity"
             android:exported="true">

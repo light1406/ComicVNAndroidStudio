@@ -79,7 +79,7 @@ public class ComicDetailActivity extends AppCompatActivity {
                 categoryView.setAdapter(new CategoryAdapter(comic.getCategory()));
                 //tab
                 detailTabAdapter = new DetailTabAdapter((FragmentActivity) context,
-                        comic.getChapters(), comic.getContent());
+                        comic.getId(),comic.getChapters(), comic.getContent());
                 viewPager2.setAdapter(detailTabAdapter);
                 new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
                     String[] title = {"Chapter", "Nội dung"};

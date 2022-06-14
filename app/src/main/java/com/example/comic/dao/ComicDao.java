@@ -47,6 +47,6 @@ public class ComicDao {
     }
 
     public Query getChapter(int comicId, int chapter){
-        return comicDb.child(comicId+"").child("chapters").child(chapter + "");
+        return comicDb.child(comicId + "/chapters/" + chapter + "/imageList");
     }
 }
