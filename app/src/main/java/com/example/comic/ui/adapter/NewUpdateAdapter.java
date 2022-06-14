@@ -1,7 +1,9 @@
 package com.example.comic.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +41,7 @@ public class NewUpdateAdapter extends RecyclerView.Adapter<NewUpdateAdapter.NewU
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewUpdateHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NewUpdateHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.comicName.setText(newUpdateList.get(position).getName());
         Picasso.get()
                 .load(newUpdateList.get(position).getCover())
@@ -48,7 +50,9 @@ public class NewUpdateAdapter extends RecyclerView.Adapter<NewUpdateAdapter.NewU
         holder.comicImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.startActivity(new Intent(context, ComicDetailActivity.class));
+                Intent intent = new Intent(context, ComicDetailActivity.class);
+                intent.putExtra("COMICID", newUpdateList.get(position).getId());
+                context.startActivity(intent);
             }
         });
     }

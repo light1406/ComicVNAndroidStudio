@@ -12,8 +12,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <include layout="@layout/for_you_home"/>
-            <include layout="@layout/new_update_home"/>
+            <include layout="@layout/for_you_home_layout"/>
+            <include layout="@layout/new_update_home_layout"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

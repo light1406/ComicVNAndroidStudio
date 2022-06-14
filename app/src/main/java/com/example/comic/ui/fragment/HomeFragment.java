@@ -46,8 +46,13 @@ public class HomeFragment extends Fragment {
             , @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.home_fragment, container, false);
+        setUpForYouLayout();
+        setUpNewUpdateLayout();
 
-        //danh cho ban
+        return view;
+    }
+
+    public void setUpForYouLayout(){
         forYouListView = view.findViewById(R.id.for_you_list);
         forYouListView.setLayoutManager(new LinearLayoutManager(view.getContext()
                 , RecyclerView.HORIZONTAL, false));
@@ -57,18 +62,17 @@ public class HomeFragment extends Fragment {
         forYouListView.smoothScrollBy(5,0);
         loadDataForYou();
         autoScollSlide();
+    }
 
-        //truyen moi cap nhat
+    public void setUpNewUpdateLayout(){
         newUpdateListView = view.findViewById(R.id.new_update_list);
         newUpdateListView.setLayoutManager(new GridLayoutManager(view.getContext()
                 , 2));
         newUpdateListView.setNestedScrollingEnabled(false);
         newUpdateList = new ArrayList<>();
-        newUpdateAdapter = new NewUpdateAdapter(newUpdateList, container.getContext());
+        newUpdateAdapter = new NewUpdateAdapter(newUpdateList, getContext());
         newUpdateListView.setAdapter(newUpdateAdapter);
         loadDataNewUpdate();
-
-        return view;
     }
 
     private void loadDataNewUpdate(){
@@ -116,7 +120,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void autoScollSlide(){
-        new CountDownTimer(60000, 1000) {
+        new CountDownTimer(60000, 1500) {
             int current = 0;
             @Override
             public void onTick(long l) {
